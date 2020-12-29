@@ -2,8 +2,8 @@ version: "3.8"
 
 services:
   app:
-    build: rdesktop
-    container_name: "rdesktop"
+    build: xfreerdp
+    container_name: "FreeRDP2-X11"
     restart: always
     networks:
       - rdp-network
