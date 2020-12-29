@@ -12,5 +12,9 @@ usage:
 
 OR use example script `rdpToRemoteServer.sh`
 
+Add version support:   
+1 - Windows 7 (rdesktop)
+2 - Windows 8+ (xfreerdp)
+
 [ssh port forwarding examples](http://pentestmonkey.net/cheat-sheet/ssh-cheat-sheet)
 

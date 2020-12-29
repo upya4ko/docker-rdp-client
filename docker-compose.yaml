@@ -2,17 +2,16 @@ version: "3.8"
 
 services:
   app:
-    build: xfreerdp
-    container_name: "FreeRDP2-X11"
+    build: rdp
+    container_name: "RDP-client"
     restart: always
     networks:
       - rdp-network
-    environment:
-      RDP_USERNAME_FILE: /run/secrets/username
-      RDP_PASSWORD_FILE: /run/secrets/password
     secrets:
       - username
       - password
+      - version
+
     deploy:
       replicas: 1
 
@@ -35,4 +34,6 @@ secrets:
     file: ./username
   password:
     file: ./password
+  version:
+    file: ./version
 

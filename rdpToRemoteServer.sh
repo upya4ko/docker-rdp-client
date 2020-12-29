@@ -7,6 +7,7 @@ proxyUser=sshUser
 rdpUsername=WindowsUser
 # get password from pass storage
 rdpPassword=$(pass show servers/$serverName/$rdpUsername)
+rdpVersion=1
 
 # start ssh
 ssh -M -S my-ctrl-socket -fnNT -L 0.0.0.0:3389:$serverIp:3389 $proxyUser@$proxyServer 
@@ -14,6 +15,7 @@ ssh -M -S my-ctrl-socket -fnNT -L 0.0.0.0:3389:$serverIp:3389 $proxyUser@$proxyS
 # set user/pass
 echo $rdpUsername > ./username
 echo $rdpPassword > ./password
+echo $rdpVersion > ./version
 
 # run docker
 docker-compose up --build  && docker-compose rm -fsv
@@ -27,4 +29,5 @@ ssh -S my-ctrl-socket -O exit $proxyUser@$proxyServer
 # cleanup user/pass
 echo username > ./username
 echo password > ./password
+
 
