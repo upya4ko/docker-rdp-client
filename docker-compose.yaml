@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  app:
+    build: rdesktop
+    container_name: "rdesktop"
+    restart: always
+    networks:
+      - rdp-network
+    deploy:
+      replicas: 1
+
+  front-novnc:
+    build: novnc
+    container_name: "novnc-front"
+    restart: always
+    networks:
+      - rdp-network
+    ports:
+      - 8086:80
+    deploy:
+      replicas: 1
+
+
+networks:
+  rdp-network:
+
