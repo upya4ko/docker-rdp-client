@@ -30,7 +30,12 @@ WORKDIR $appPath
 USER $appUser
 
 RUN echo "exec openbox-session & \n \
-         rdesktop -f $(/sbin/ip route|awk '/default/ { print $3 }') \
+         hostIp=\$(/sbin/ip route|awk '/default/ { print \$3 }') \n \
+         rdpUsername=\$(cat /run/secrets/username) \n \
+         rdpPassword=\$(cat /run/secrets/password) \n \
+         rdesktop -f \$hostIp \
+         -u \$rdpUsername \
+         -p \$rdpPassword \
          " > ~/.xinitrc \
          && chmod 755 ~/.xinitrc
 

@@ -7,6 +7,12 @@ services:
     restart: always
     networks:
       - rdp-network
+    environment:
+      RDP_USERNAME_FILE: /run/secrets/username
+      RDP_PASSWORD_FILE: /run/secrets/password
+    secrets:
+      - username
+      - password
     deploy:
       replicas: 1
 
@@ -21,7 +27,12 @@ services:
     deploy:
       replicas: 1
 
-
 networks:
   rdp-network:
+
+secrets:
+  username:
+    file: ./username
+  password:
+    file: ./password
 
