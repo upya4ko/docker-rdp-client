@@ -1,6 +1,6 @@
 FROM debian:buster
-LABEL com.local.version="0.0.2"
-LABEL com.local.is-production="False"
+LABEL com.local.version="0.0.3"
+LABEL com.local.is-production="True"
 
 ARG appPath=/app \
     appUser=novnc
