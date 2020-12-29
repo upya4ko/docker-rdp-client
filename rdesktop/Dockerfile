@@ -7,12 +7,13 @@ ARG appUser=vncserver
 
 RUN apt update \
   && apt install -y \
-#  sudo \
+  sudo \
   openbox \
   xterm \
   x11vnc \
   xvfb \
-  rdesktop \
+#  rdesktop \
+  freerdp2-x11 \
   && apt-get clean \
   && rm -rf /var/cache/* \
   && rm -rf /var/lib/apt/lists/*
@@ -22,7 +23,7 @@ RUN useradd --home-dir $appPath \
     $appUser
 
 # Need for debug
-#RUN echo "$appUser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$appUser
+RUN echo "$appUser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$appUser
 
 RUN chown -R $appUser: $appPath
 
@@ -33,11 +34,24 @@ RUN echo "exec openbox-session & \n \
          hostIp=\$(/sbin/ip route|awk '/default/ { print \$3 }') \n \
          rdpUsername=\$(cat /run/secrets/username) \n \
          rdpPassword=\$(cat /run/secrets/password) \n \
-         rdesktop -f \$hostIp \
-         -u \$rdpUsername \
-         -p \$rdpPassword \
+         xfreerdp /f /v:\$hostIp \
+         /cert-ignore \
+         /u:\$rdpUsername \
+         /p:\$rdpPassword \
+         +clipboard \
          " > ~/.xinitrc \
          && chmod 755 ~/.xinitrc
+
+#RUN echo "exec openbox-session & \n \
+#         hostIp=\$(/sbin/ip route|awk '/default/ { print \$3 }') \n \
+#         rdpUsername=\$(cat /run/secrets/username) \n \
+#         rdpPassword=\$(cat /run/secrets/password) \n \
+#         rdesktop -f \$hostIp \
+#         -u \$rdpUsername \
+#         -p \$rdpPassword \
+#         " > ~/.xinitrc \
+#         && chmod 755 ~/.xinitrc
+
 
 ENV USER=$appUser \
     HOME=$appPath \
