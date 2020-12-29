@@ -1,4 +1,4 @@
-# doker-rdp-client
+# docker-rdp-client
 
 Web-based implementation of RDP client.
 
